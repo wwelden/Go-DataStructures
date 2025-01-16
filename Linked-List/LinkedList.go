@@ -1,44 +1,44 @@
-package main
+package LinkedList
 
 import "fmt"
 
-// Define the Node structure
 type Node struct {
-    data int
-    next *Node
+	data int
+	next *Node
 }
 
-// Define the LinkedList structure
 type LinkedList struct {
-    head *Node
+	head *Node
 }
 
-// Function to insert a new node at the beginning of the list
-func (l *LinkedList) Insert(data int) {
-    newNode := &Node{data: data}
-    if l.head == nil {
-        l.head = newNode
-    } else {
-        newNode.next = l.head
-        l.head = newNode
-    }
+func (l *LinkedList) Add(data int) {
+	newNode := &Node{data: data, next: nil}
+	if l.head.next == nil {
+		l.head = newNode
+		return
+	}
+
+	curNode := l.head
+	for curNode != nil {
+		curNode = curNode.next
+	}
+	curNode.next = newNode
 }
 
-// Function to display the linked list
-func (l *LinkedList) Display() {
-    current := l.head
-    for current != nil {
-        fmt.Printf("%d ", current.data)
-        current = current.next
-    }
-    fmt.Println()
+func (l *LinkedList) Remove() {
+	curNode := l.head
+
+	for curNode.next.next != nil {
+		curNode.next = curNode
+	}
+	curNode.next = nil
 }
 
-func main() {
-    list := LinkedList{}
-    list.Insert(30)
-    list.Insert(20)
-    list.Insert(10)
-
-    list.Display()
+func (l *LinkedList) Print() {
+	current := l.head
+	for current != nil {
+		fmt.Printf("%d ", current.data)
+		current = current.next
+	}
+	fmt.Println()
 }
