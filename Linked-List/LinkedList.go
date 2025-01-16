@@ -2,17 +2,17 @@ package LinkedList
 
 import "fmt"
 
-type Node struct {
-	data int
-	next *Node
+type Node[T comparable] struct {
+	data T
+	next *Node[T]
 }
 
-type LinkedList struct {
-	head *Node
+type LinkedList[T comparable] struct {
+	head *Node[T]
 }
 
-func (l *LinkedList) Add(data int) {
-	newNode := &Node{data: data, next: nil}
+func (l *LinkedList[T]) Add(data T) {
+	newNode := &Node[T]{data: data, next: nil}
 	if l.head.next == nil {
 		l.head = newNode
 		return
@@ -25,7 +25,7 @@ func (l *LinkedList) Add(data int) {
 	curNode.next = newNode
 }
 
-func (l *LinkedList) Remove() {
+func (l *LinkedList[T]) Remove() {
 	curNode := l.head
 
 	for curNode.next.next != nil {
@@ -34,10 +34,14 @@ func (l *LinkedList) Remove() {
 	curNode.next = nil
 }
 
-func (l *LinkedList) Print() {
+func (l *LinkedList[T]) AddFront(data T) {
+
+}
+
+func (l *LinkedList[T]) Print() {
 	current := l.head
 	for current != nil {
-		fmt.Printf("%d ", current.data)
+		fmt.Printf("%v ", current.data)
 		current = current.next
 	}
 	fmt.Println()

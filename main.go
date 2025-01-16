@@ -9,7 +9,7 @@ import (
 func main() {
 
 	fmt.Println("Linked List")
-	ll := LinkedList.LinkedList{}
+	ll := LinkedList.LinkedList[int]{}
 	ll.Add(1)
 	ll.Add(2)
 	ll.Add(3)
