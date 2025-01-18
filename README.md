@@ -2,4 +2,4 @@
 
 Just practice for fun
 
-pretty much just did some of teh projects from data abs but in GO instead of C++
+pretty much just did some of the projects from data abs but in GO instead of C++
