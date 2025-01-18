@@ -1,4 +1,4 @@
-package stack
+package stackll
 
 import (
 	"testing"
@@ -9,12 +9,9 @@ func TestStackCreation(t *testing.T) {
 	if !s.IsEmpty() {
 		t.Error("New Stack should be empty")
 	}
-	if s.Length() != 0 {
-		t.Error("New Stack should have length 0")
-	}
 }
 
-func TestPushAndTop(t *testing.T) {
+func TestPushAndPeek(t *testing.T) {
 	tests := []struct {
 		name     string
 		values   []int
@@ -39,12 +36,12 @@ func TestPushAndTop(t *testing.T) {
 				s.Push(v)
 			}
 
-			if s.Length() != len(tt.values) {
-				t.Errorf("Expected length %d, got %d", len(tt.values), s.Length())
+			value, exists := s.Peek()
+			if !exists {
+				t.Error("Peek should return true for non-empty stack")
 			}
-
-			if s.Top() != tt.expected {
-				t.Errorf("Expected top value %d, got %d", tt.expected, s.Top())
+			if value != tt.expected {
+				t.Errorf("Expected top value %d, got %d", tt.expected, value)
 			}
 		})
 	}
@@ -52,6 +49,12 @@ func TestPushAndTop(t *testing.T) {
 
 func TestPop(t *testing.T) {
 	s := Stack[int]{}
+
+	// Test pop on empty stack
+	_, exists := s.Pop()
+	if exists {
+		t.Error("Pop on empty stack should return false")
+	}
 
 	// Push some values
 	values := []int{1, 2, 3}
@@ -61,30 +64,18 @@ func TestPop(t *testing.T) {
 
 	// Test popping all values
 	for i := len(values) - 1; i >= 0; i-- {
-		popped := s.Pop()
-		if popped != values[i] {
-			t.Errorf("Expected popped value %d, got %d", values[i], popped)
+		value, exists := s.Pop()
+		if !exists {
+			t.Error("Pop should return true for non-empty stack")
+		}
+		if value != values[i] {
+			t.Errorf("Expected popped value %d, got %d", values[i], value)
 		}
 	}
 
+	// Verify stack is empty after popping all values
 	if !s.IsEmpty() {
 		t.Error("Stack should be empty after popping all values")
-	}
-}
-
-func TestBottomAndTop(t *testing.T) {
-	s := Stack[int]{}
-
-	s.Push(1)
-	s.Push(2)
-	s.Push(3)
-
-	if s.Bottom() != 1 {
-		t.Errorf("Expected bottom value 1, got %d", s.Bottom())
-	}
-
-	if s.Top() != 3 {
-		t.Errorf("Expected top value 3, got %d", s.Top())
 	}
 }
 
@@ -96,16 +87,24 @@ func TestWithStrings(t *testing.T) {
 		s.Push(str)
 	}
 
-	if s.Length() != len(strings) {
-		t.Errorf("Expected length %d, got %d", len(strings), s.Length())
+	// Test peek
+	value, exists := s.Peek()
+	if !exists {
+		t.Error("Peek should return true for non-empty stack")
+	}
+	if value != "!" {
+		t.Errorf("Expected top value '!', got '%s'", value)
 	}
 
-	if s.Top() != "!" {
-		t.Errorf("Expected top value '!', got '%s'", s.Top())
-	}
-
-	if s.Bottom() != "hello" {
-		t.Errorf("Expected bottom value 'hello', got '%s'", s.Bottom())
+	// Test pop
+	for i := len(strings) - 1; i >= 0; i-- {
+		value, exists := s.Pop()
+		if !exists {
+			t.Error("Pop should return true for non-empty stack")
+		}
+		if value != strings[i] {
+			t.Errorf("Expected popped value '%s', got '%s'", strings[i], value)
+		}
 	}
 }
 

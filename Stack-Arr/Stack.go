@@ -1,4 +1,4 @@
-package stack
+package stackarr
 
 import "fmt"
 
@@ -32,10 +32,8 @@ func (s *Stack[T]) Pop() T {
 	s.s = s.s[:length-1]
 	return res
 }
-
-func (s *Stack[T]) Top() T {
-	length := len(s.s)
-	return s.s[length-1]
+func (s *Stack[T]) Peek() T {
+	return s.s[len(s.s)-1]
 }
 
 func (s *Stack[T]) Bottom() T {
