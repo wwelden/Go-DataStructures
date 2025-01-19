@@ -6,6 +6,7 @@ import (
 	"time"
 
 	BST "github.com/wwelden/Go-DataStructures/BST"
+	CircularLinkedList "github.com/wwelden/Go-DataStructures/Circular-Linked-List"
 	HashMap "github.com/wwelden/Go-DataStructures/Hash-Map"
 	LinkedList "github.com/wwelden/Go-DataStructures/Linked-List"
 	QueueArr "github.com/wwelden/Go-DataStructures/Queue-Arr"
@@ -65,6 +66,13 @@ func main() {
 	hm.Put("two", 2)
 	hm.Put("three", 3)
 	hm.Print()
+
+	fmt.Println("\n=== Circular Linked List ===")
+	cl := CircularLinkedList.CircularLinkedList[int]{}
+	cl.Add(1)
+	cl.Add(2)
+	cl.Add(3)
+	cl.Print()
 
 	runBenchmarks()
 }
@@ -138,6 +146,14 @@ func runBenchmarks() {
 		hm.Put(key, i)
 	}
 	results = append(results, BenchmarkResult{"HashMap Put", time.Since(start)})
+
+	// Circular List Benchmark
+	start = time.Now()
+	cl := CircularLinkedList.CircularLinkedList[int]{}
+	for i := 0; i < n; i++ {
+		cl.Add(i)
+	}
+	results = append(results, BenchmarkResult{"LL (Circular) Add", time.Since(start)})
 
 	// Search Operations
 	// fmt.Println("\n=== Search Operations ===")
