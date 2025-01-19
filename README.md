@@ -2,4 +2,4 @@
 
 Just practice for fun
 
-pretty much just did some of the projects from data abs but in GO instead of C++
+Differnet data structures implemented in GO with benchmarks
